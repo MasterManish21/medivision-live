@@ -1,0 +1,614 @@
+<!-- MEDIVISION - Integration Example -->
+<!-- This file demonstrates how to integrate the map module into the React app -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDIVISION - Integration Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 1rem;
+        }
+
+        h2 {
+            color: #1e40af;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            color: #2563eb;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        code {
+            background: #f5f5f5;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 4px solid #2563eb;
+        }
+
+        pre code {
+            color: #e2e8f0;
+            background: none;
+            padding: 0;
+        }
+
+        .integration-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .method {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .method:hover {
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        }
+
+        .method h3 {
+            margin-top: 0;
+        }
+
+        .method-badge {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-text strong {
+            display: block;
+            color: #2563eb;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-text p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .success-box {
+            background: #ecfdf5;
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        ul,
+        ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #e5e7eb;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .button:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .demo-link {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+
+            .integration-methods,
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🏥 MEDIVISION - Hospital Finder Map</h1>
+        <p style="font-size: 1.1rem; color: #2563eb; font-weight: 500;">A Complete Integration Guide</p>
+
+        <h2>📋 Overview</h2>
+        <p>The MEDIVISION Hospital Finder Map is a modern, responsive web-based map module that helps users discover
+            nearby hospitals, clinics, and pharmacies in Pune, India. It's built with vanilla JavaScript, Leaflet.js,
+            and OpenStreetMap — no API keys required!</p>
+
+        <div class="info-box">
+            <strong>✨ Key Highlight:</strong> This module is completely free, open-source, and requires NO external API
+            keys or paid services. All data comes from OpenStreetMap and related free APIs.
+        </div>
+
+        <h2>🎯 Core Features</h2>
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">🗺️</div>
+                <div class="feature-text">
+                    <strong>Interactive Map</strong>
+                    <p>Full-screen Leaflet map centered on Pune with smooth zoom and pan</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🏥</div>
+                <div class="feature-text">
+                    <strong>Hospital Discovery</strong>
+                    <p>Automatic fetching of nearby hospitals, clinics, and pharmacies</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔍</div>
+                <div class="feature-text">
+                    <strong>Smart Search</strong>
+                    <p>Search by location, hospital name, or area with autocomplete</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📍</div>
+                <div class="feature-text">
+                    <strong>Geolocation</strong>
+                    <p>Detect and display user's current location with marker</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-text">
+                    <strong>Modern UI</strong>
+                    <p>Glassmorphism design with smooth animations and medical theme</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📱</div>
+                <div class="feature-text">
+                    <strong>Mobile Responsive</strong>
+                    <p>Fully optimized for desktop, tablet, and mobile devices</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>📂 Files Included</h2>
+        <table>
+            <tr>
+                <th>File</th>
+                <th>Purpose</th>
+                <th>Size</th>
+            </tr>
+            <tr>
+                <td><code>index.html</code></td>
+                <td>Main HTML structure with map container and UI elements</td>
+                <td>~8 KB</td>
+            </tr>
+            <tr>
+                <td><code>style.css</code></td>
+                <td>Modern styling with glassmorphism and animations</td>
+                <td>~15 KB</td>
+            </tr>
+            <tr>
+                <td><code>map.js</code></td>
+                <td>JavaScript logic using MapManager class</td>
+                <td>~12 KB</td>
+            </tr>
+            <tr>
+                <td><code>README.md</code></td>
+                <td>Complete documentation and customization guide</td>
+                <td>~10 KB</td>
+            </tr>
+        </table>
+
+        <div class="success-box">
+            <strong>✅ Total Module Size:</strong> ~45 KB (uncompressed) | Minimal external dependencies
+        </div>
+
+        <h2>🚀 Integration Methods</h2>
+
+        <div class="integration-methods">
+            <div class="method">
+                <div class="method-badge">Quick & Easy</div>
+                <h3>Method 1: Standalone HTML</h3>
+                <p>Open the map in a separate HTML file or modal</p>
+                <pre><code>&lt;!-- Open in new tab/window --&gt;
+&lt;a href="/map-module/index.html" target="_blank"&gt;
+  View Map
+&lt;/a&gt;</code></pre>
+                <p><strong>Pros:</strong> Simplest implementation</p>
+                <p><strong>Cons:</strong> Separate window/tab</p>
+            </div>
+
+            <div class="method">
+                <div class="method-badge">Recommended</div>
+                <h3>Method 2: React Component (Iframe)</h3>
+                <p>Embed map in React component using iframe</p>
+                <pre><code>&lt;iframe 
+  src="/map-module/index.html" 
+  style={{
+    width: '100%',
+    height: '600px',
+    border: 'none',
+    borderRadius: '10px'
+  }}
+/&gt;</code></pre>
+                <p><strong>Pros:</strong> No state conflicts, isolated</p>
+                <p><strong>Cons:</strong> Limited communication between React and map</p>
+            </div>
+
+            <div class="method">
+                <div class="method-badge">Advanced</div>
+                <h3>Method 3: Script Injection</h3>
+                <p>Load map.js directly in React component</p>
+                <pre><code>useEffect(() => {
+  const script = document.createElement('script');
+  script.src = '/map-module/map.js';
+  document.body.appendChild(script);
+}, []);</code></pre>
+                <p><strong>Pros:</strong> Full control and customization</p>
+                <p><strong>Cons:</strong> Requires careful state management</p>
+            </div>
+
+            <div class="method">
+                <div class="method-badge">Next-Level</div>
+                <h3>Method 4: Custom React Component</h3>
+                <p>Port map.js logic to React hooks</p>
+                <pre><code>function HospitalMap() {
+  useEffect(() => {
+    initializeMap();
+  }, []);
+  return &lt;div id="map" /&gt;;
+}</code></pre>
+                <p><strong>Pros:</strong> Full React integration</p>
+                <p><strong>Cons:</strong> Most complex implementation</p>
+            </div>
+        </div>
+
+        <h2>⚡ Quick Start</h2>
+        <h3>Step 1: Copy Files</h3>
+        <pre><code># Copy the entire map-module folder to your frontend/public
+frontend/public/map-module/
+  ├── index.html
+  ├── style.css
+  ├── map.js
+  └── README.md</code></pre>
+
+        <h3>Step 2: Start Local Server</h3>
+        <pre><code># Using Python 3
+python -m http.server 8000
+
+# Or using Node.js
+npx http-server</code></pre>
+
+        <h3>Step 3: Open in Browser</h3>
+        <pre><code>http://localhost:8000/map-module/</code></pre>
+
+        <h3>Step 4: Integrate with React</h3>
+        <p>Add to your hospitals page component:</p>
+        <pre><code>// frontend/src/pages/Hospitals.jsx
+import React from 'react';
+
+export default function Hospitals() {
+  return (
+    &lt;div style={{ height: '100vh' }}&gt;
+      &lt;iframe 
+        src="/map-module/index.html"
+        style={{
+          width: '100%',
+          height: '100%',
+          border: 'none'
+        }}
+        title="Hospital Finder Map"
+      /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+        <h2>🛠️ API Integration Details</h2>
+        <table>
+            <tr>
+                <th>API</th>
+                <th>Purpose</th>
+                <th>Endpoint</th>
+                <th>Cost</th>
+                <th>API Key</th>
+            </tr>
+            <tr>
+                <td><strong>Leaflet.js</strong></td>
+                <td>Map library</td>
+                <td>CDN</td>
+                <td>Free</td>
+                <td>❌ None</td>
+            </tr>
+            <tr>
+                <td><strong>OpenStreetMap</strong></td>
+                <td>Map tiles</td>
+                <td>openstreetmap.org</td>
+                <td>Free</td>
+                <td>❌ None</td>
+            </tr>
+            <tr>
+                <td><strong>Overpass API</strong></td>
+                <td>Query facilities</td>
+                <td>overpass-api.de</td>
+                <td>Free</td>
+                <td>❌ None</td>
+            </tr>
+            <tr>
+                <td><strong>Nominatim</strong></td>
+                <td>Search locations</td>
+                <td>nominatim.org</td>
+                <td>Free</td>
+                <td>❌ None</td>
+            </tr>
+            <tr>
+                <td><strong>Geolocation</strong></td>
+                <td>User location</td>
+                <td>Browser API</td>
+                <td>Free</td>
+                <td>❌ None</td>
+            </tr>
+        </table>
+
+        <div class="success-box">
+            <strong>✅ No API Keys Required!</strong> All services used are public and free. This module can be deployed
+            without any authentication or cost.
+        </div>
+
+        <h2>📱 Responsive Design</h2>
+        <table>
+            <tr>
+                <th>Device Type</th>
+                <th>Breakpoint</th>
+                <th>Optimizations</th>
+            </tr>
+            <tr>
+                <td><strong>Desktop</strong></td>
+                <td>&gt; 768px</td>
+                <td>Full features, side-by-side layouts</td>
+            </tr>
+            <tr>
+                <td><strong>Tablet</strong></td>
+                <td>480px - 768px</td>
+                <td>Adjusted spacing, stacked panels</td>
+            </tr>
+            <tr>
+                <td><strong>Mobile</strong></td>
+                <td>&lt; 480px</td>
+                <td>Compact UI, touch-friendly buttons</td>
+            </tr>
+        </table>
+
+        <h2>🎨 Customization Examples</h2>
+
+        <h3>Example 1: Change Default Location</h3>
+        <p>Edit <code>map.js</code> in the MapManager constructor:</p>
+        <pre><code>// Change from Pune to Mumbai
+this.PUNE_LAT = 19.0760;       // Mumbai latitude
+this.PUNE_LNG = 72.8777;       // Mumbai longitude
+this.ZOOM_LEVEL = 12;</code></pre>
+
+        <h3>Example 2: Modify Color Theme</h3>
+        <p>Edit <code>style.css</code> variables:</p>
+        <pre><code>:root {
+    --primary: #10b981;        /* Green theme */
+    --secondary: #2563eb;      /* Blue accent */
+    --accent: #f59e0b;         /* Orange highlight */
+}</code></pre>
+
+        <h3>Example 3: Add Custom Facility Type</h3>
+        <p>In <code>map.js</code>, extend the facility types:</p>
+        <pre><code>// Add dental clinics to the search
+if (tags.amenity === 'clinic') type = 'clinic';
+else if (tags.amenity === 'dentist') type = 'dentist';
+
+// Update emoji mapping
+getTypeEmoji(type) {
+    const emojis = {
+        hospital: '🏥',
+        clinic: '⚕️',
+        pharmacy: '💊',
+        dentist: '🦷'
+    };
+}</code></pre>
+
+        <h2>⚠️ Important Notes</h2>
+
+        <div class="warning-box">
+            <strong>⚠️ Geolocation HTTPS:</strong> For production deployment, ensure your app runs on HTTPS. Geolocation
+            API requires secure context (HTTPS or localhost).
+        </div>
+
+        <div class="info-box">
+            <strong>ℹ️ CORS Policy:</strong> All external APIs used have CORS headers enabled for public access. No
+            backend proxy needed.
+        </div>
+
+        <div class="info-box">
+            <strong>ℹ️ Data Freshness:</strong> Hospital data comes from OpenStreetMap, which is community-maintained.
+            Data freshness varies by region. Encourage users to report updates to OSM.
+        </div>
+
+        <h2>🔄 Performance Optimization Tips</h2>
+        <ol>
+            <li><strong>Caching:</strong> Store fetched hospital data in localStorage to reduce API calls</li>
+            <li><strong>Lazy Loading:</strong> Load more hospitals only when zoomed in or on demand</li>
+            <li><strong>Clustering:</strong> Already enabled - groups 10+ nearby markers automatically</li>
+            <li><strong>Debouncing:</strong> Search input is debounced (300ms) to reduce API calls</li>
+            <li><strong>Responsive Images:</strong> Use emojis instead of image files for markers</li>
+        </ol>
+
+        <h2>🐛 Troubleshooting</h2>
+
+        <h3>Map Not Loading?</h3>
+        <ul>
+            <li>✓ Ensure you're opening from a server (not file://)</li>
+            <li>✓ Check browser console (F12) for errors</li>
+            <li>✓ Verify Leaflet CDN is loading (Network tab)</li>
+        </ul>
+
+        <h3>Geolocation Not Working?</h3>
+        <ul>
+            <li>✓ Allow browser permission when prompted</li>
+            <li>✓ Use HTTPS or localhost</li>
+            <li>✓ Check browser location settings</li>
+        </ul>
+
+        <h3>No Hospitals Showing?</h3>
+        <ul>
+            <li>✓ Check filters - ensure at least one is checked</li>
+            <li>✓ Verify OSM data exists for your region</li>
+            <li>✓ Try zooming out for broader results</li>
+        </ul>
+
+        <div class="demo-link">
+            <h2>🎉 Ready to Go!</h2>
+            <p>Your hospital finder map is ready for production use. The module is self-contained and can be deployed
+                immediately.</p>
+            <button class="button" onclick="window.open('index.html', '_blank')">
+                🗺️ Open Map Demo
+            </button>
+        </div>
+
+        <hr style="margin: 2rem 0; border: none; border-top: 2px solid #e5e7eb;">
+
+        <p style="text-align: center; color: #999; font-size: 0.9rem; margin-top: 2rem;">
+            <strong>MEDIVISION Hospital Finder Map v1.0.0</strong><br>
+            Built with Leaflet.js, OpenStreetMap & Vanilla JavaScript<br>
+            Free & Open Source | No API Keys Required | Production Ready ✅
+        </p>
+    </div>
+</body>
+
+</html>

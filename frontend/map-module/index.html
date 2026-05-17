@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDIVISION - Hospital Finder Map</title>
+
+    <!-- Leaflet CSS for map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Leaflet MarkerCluster CSS for clustering -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.1/dist/MarkerCluster.Default.css" />
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="top-bar">
+            <div class="brand-block">
+                <h1>MEDIVISION</h1>
+                <p>Live Hospital Finder</p>
+            </div>
+
+            <div class="search-panel">
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" class="search-input"
+                        placeholder="Search city, area, hospital..." autocomplete="off">
+                    <button id="searchBtn" class="search-btn" title="Search">Search</button>
+                    <button id="geoBtn" class="geo-btn" title="Find my location">My Location</button>
+                </div>
+                <div id="searchResults" class="search-results hidden"></div>
+            </div>
+
+            <div class="filter-panel" aria-label="facility filters">
+                <label class="filter-checkbox"><input type="checkbox" id="filterHospital" checked> Hospital</label>
+                <label class="filter-checkbox"><input type="checkbox" id="filterClinic" checked> Clinic</label>
+                <label class="filter-checkbox"><input type="checkbox" id="filterPharmacy" checked> Pharmacy</label>
+            </div>
+        </header>
+
+        <main class="layout">
+            <aside class="list-panel">
+                <div class="list-head">
+                    <h2>Nearby Facilities</h2>
+                    <span id="listMeta">Loading...</span>
+                </div>
+                <div id="hospitalList" class="hospital-list" aria-live="polite"></div>
+            </aside>
+
+            <section class="map-panel">
+                <div id="map" class="map"></div>
+                <div class="bottom-info">
+                    <span id="mapInfo">Loading map...</span>
+                </div>
+            </section>
+        </main>
+
+        <div id="loadingSpinner" class="loading-spinner hidden">
+            <div class="spinner"></div>
+            <p>Fetching live hospital data...</p>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Leaflet MarkerCluster JS -->
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.1/dist/leaflet.markercluster.js"></script>
+
+    <!-- Custom map logic -->
+    <script src="map.js"></script>
+</body>
+
+</html>
